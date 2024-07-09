@@ -17,11 +17,17 @@ body {
   border-radius: 5px;
 }
 
+
+
 h1 {
   word-spacing: 5px;
   letter-spacing: 5px;
   font-family: inherit;
   font-size: 50px;
+}
+
+.display-none {
+  display: none;
 }
 
 
