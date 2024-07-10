@@ -31,6 +31,41 @@ h1 {
 }
 
 
+.playingScreen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+
+.playingScreenActive {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.stats {
+  display: flex;
+  flex-direction: row;
+  column-gap: 150px;
+  
+}
+
+.playsMove {
+  margin-top: 50px;
+  display: flex;
+  gap: 52px;
+  flex-direction: row;
+}
+
+img {
+  width: 50px;
+}
+
+
+
 
 
 
