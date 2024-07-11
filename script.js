@@ -1,7 +1,3 @@
-//kako radi forEach metoda u javascriptu
-//kako uz pomoc forEach petlje dodati eventlistener za svaki elemnat(querySelectorAll)
-//razlika izmedju forEach i map
-
 //global
 let playerScore = 0;
 let computerScore = 0;
@@ -12,7 +8,20 @@ let computerMove = null;
 let playerMove = null;
 
 function generateRandomNumber() {
-  return Math.floor(Math.random() * 2)
+  return Math.floor(Math.random() * 3)
+}
+
+function resetedVariables() {
+  playerScore = 0;
+  computerScore = 0;
+}
+
+function reset() {
+  mainSection.style.display = "flex";
+  finishSection.style.display = "none";
+  resetedVariables()
+  playerScoreStatus.innerHTML = 0;
+  computerScoreStatus.innerHTML = 0;
 }
 
 //dom
@@ -27,9 +36,9 @@ const playerMove3 = document.querySelector('.actionScissors');
 const actionButtons = document.querySelectorAll('.action')
 const someoneWinner = document.querySelector('.winner');
 const playerChoices = document.querySelector('.choices');
-const finishSection = document.querySelector('.finish')
-const playAgain = document.querySelector('.playAgain')
-//console.log(actionButtons)
+const finishSection = document.querySelector('.finish');
+const playAgain = document.querySelector('.playAgain');
+
 
 //displayScreen
 function changeToMainScreen() {
@@ -38,65 +47,54 @@ function changeToMainScreen() {
 }
 buttonPlay.addEventListener('click', changeToMainScreen);
 
+//forEach on action buttons
+actionButtons.forEach(function(btn) {
+  btn.addEventListener('click', function(e) {
+    playerMove = e.target.id;
+    computerMove = choices[generateRandomNumber()];
+    console.log(playerMove);
+    console.log((computerMove));
+    if(computerMove == 'rock' && playerMove == 'rock' ) {
+      console.log('draft')
+     } else if(computerMove == 'paper' && playerMove == 'rock') {
+      computerScoreStatus.innerHTML = `${++computerScore}`
+     } else if(computerMove == 'scissors' && playerMove == 'rock') {
+      playerScoreStatus.innerHTML = `${++playerScore}`
+     } else if(computerMove == 'rock' && playerMove == 'paper') {
+      playerScoreStatus.innerHTML = `${++playerScore}`
+     } else if(computerMove == 'paper' && playerMove == 'paper' ) {
+      console.log(`draft`)
+     } else if(computerMove == 'scissors' && playerMove == 'paper') {
+      computerScoreStatus.innerHTML = `${++computerScore}`
+     } else if(computerMove == 'rock' && playerMove == 'scissors') {
+      computerScoreStatus.innerHTML = `${++computerScore}`
+     } else if(computerMove == 'paper' && playerMove == 'scissors') {
+      playerScoreStatus.innerHTML = `${++playerScore}`
+     } else if(computerMove == 'scissors') {
+      console.log(`draft`)
+     }
+     checkWinner()
+    
+  })
+});
 
-//biding
-playerMove1.addEventListener('click', function(e) {
- playerMove = e.target.id;
- computerMove = choices[generateRandomNumber()];
- console.log('player move:', playerMove );
- console.log('computer move:', computerMove);
- if(computerMove == 'rock') {
-  console.log('draft')
- } else if(computerMove == 'paper') {
-  computerScoreStatus.innerHTML = `${++computerScore}`
- } else if(computerMove == 'scissors') {
-  playerScoreStatus.innerHTML = `${++playerScore}`
- }
-checkWinner();
-})
 
-playerMove2.addEventListener('click', function(e) {
-  playerMove = (e.target.id);
-  computerMove = choices[generateRandomNumber()];
-  console.log('player move:', playerMove );
-  console.log('computer move:', computerMove);
-  if(computerMove == 'rock') {
-    playerScoreStatus.innerHTML = `${++playerScore}`
-   } else if(computerMove == 'paper') {
-    console.log(`draft`)
-   } else if(computerMove == 'scissors') {
-    computerScoreStatus.innerHTML = `${++computerScore}`
-   }
-   checkWinner();
-})
-
-playerMove3.addEventListener('click', function(e) {
-  playerMove = (e.target.id);
-  computerMove = choices[generateRandomNumber()];
-  console.log('player move:', playerMove );
-  console.log('computer move:', computerMove);
-  if(computerMove == 'rock') {
-    computerScoreStatus.innerHTML = `${++computerScore}`
-   } else if(computerMove == 'paper') {
-    playerScoreStatus.innerHTML = `${++playerScore}`
-   } else if(computerMove == 'scissors') {
-    console.log(`draft`)
-   }
-   checkWinner();
-})
 
 function checkWinner() {
   if(playerScore == 3) {
+    finishSection.style.display = "block"
     mainSection.style.display = "none";
     someoneWinner.innerHTML = `<h1>Winners is human, with score: ${playerScore}</h1>`
-    playAgain.innerHTML = `Play again`;
-    playAgain.addEventListener('click', function() {window.location.reload()})
+    resetedVariables();
+    playAgain.addEventListener('click', reset)
   } else if(computerScore == 3) {
+    finishSection.style.display = "block"    
     mainSection.style.display = "none";
     someoneWinner.innerHTML = `<h1>Winner is computer, with score: ${computerScore}`;
     playAgain.innerHTML = `Play again`
-    playAgain.addEventListener('click', function() {window.location.reload()})
-  }
+    resetedVariables();
+    playAgain.addEventListener('click', reset)
+}
 }
 
 
